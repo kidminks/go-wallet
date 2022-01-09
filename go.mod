@@ -1,4 +1,4 @@
-module taskpot.com/go_payments
+module taskpot.com/go_wallet
 
 go 1.17
 

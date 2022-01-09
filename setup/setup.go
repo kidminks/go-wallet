@@ -1,9 +1,9 @@
 package setup
 
 import (
-	"taskpot.com/go_payments/config"
-	"taskpot.com/go_payments/helper"
-	"taskpot.com/go_payments/utils"
+	"taskpot.com/go_wallet/config"
+	"taskpot.com/go_wallet/helper"
+	"taskpot.com/go_wallet/utils"
 )
 
 func Setup(dbConfigFile string) {

@@ -1,6 +1,6 @@
 package config
 
-import "taskpot.com/go_payments/model/dto"
+import "taskpot.com/go_wallet/model/dto"
 
 const CreateTableSqlPath = "./setup/config/database/sql_table_script.sql"
 const MySql = "mysql"

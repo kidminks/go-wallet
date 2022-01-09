@@ -3,8 +3,8 @@ package utils
 import (
 	"encoding/json"
 	"os"
-	"taskpot.com/go_payments/config"
-	"taskpot.com/go_payments/model/dto"
+	"taskpot.com/go_wallet/config"
+	"taskpot.com/go_wallet/model/dto"
 )
 
 func ReadParentDatabaseConfig(filePath string, ) {

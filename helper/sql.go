@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"io/ioutil"
-	"taskpot.com/go_payments/config"
-	"taskpot.com/go_payments/utils"
+	"taskpot.com/go_wallet/config"
+	"taskpot.com/go_wallet/utils"
 )
 
 func getDbConnection() *sql.DB {
