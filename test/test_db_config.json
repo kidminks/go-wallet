@@ -1,0 +1,5 @@
+{
+  "DbName": "wallet",
+  "DbUser": "wallet_rw",
+  "DbPass": "wallet_rw"
+}
