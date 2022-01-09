@@ -1,10 +1,10 @@
-package helper
+package setup
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
 	"io/ioutil"
 	"taskpot.com/go_wallet/config"
+	"taskpot.com/go_wallet/helper"
 	"taskpot.com/go_wallet/utils"
 )
 
@@ -38,7 +38,7 @@ func CreateWalletTable() {
 		if len(s) == 0 {
 			continue
 		}
-		Logger().Info("Executing query :- " + s)
+		helper.Logger().Info("Executing query :- " + s)
 		if _, err := db.Exec(s); err != nil {
 			panic(err)
 		}
