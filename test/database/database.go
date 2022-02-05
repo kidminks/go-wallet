@@ -40,7 +40,7 @@ func GetDbConnection() *gorm.DB {
 		databaseLock.Lock()
 		defer databaseLock.Unlock()
 		if db == nil {
-			helper.Logger().Info("Creating new db instance")
+			helper.Logger().Info("Creating new database instance")
 			db = getDbConnection()
 		}
 	}
