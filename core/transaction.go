@@ -24,8 +24,33 @@ func GetTransactionById(id string, db *gorm.DB) (*model.Transaction, error) {
 	return transaction, nil
 }
 
+func validateTransaction(transaction *model.Transaction, db *gorm.DB) error {
+	if transaction.PrimaryWalletUuid == "" || transaction.SecondaryWalletUuid == "" {
+		return errors.New(config.INVALID_DATA)
+	}
+	var ids []string
+	ids = append(ids, transaction.PrimaryWalletUuid)
+	ids = append(ids, transaction.SecondaryWalletUuid)
+	getWallets, err := AreWalletsPresent(ids, db)
+	if err != nil {
+		return err
+	}
+	for _, wallet := range getWallets {
+		if wallet.Uuid == transaction.PrimaryWalletUuid {
+			transaction.PrimaryWalletId = wallet.Id
+		} else {
+			transaction.SecondaryWalletId = wallet.Id
+		}
+	}
+	return nil
+}
+
 func CreateTransaction(transaction *model.Transaction, db *gorm.DB) (*model.Transaction, error) {
 	helper.Logger().Info("Creating transaction from " + transaction.PrimaryWalletUuid + " to " + transaction.SecondaryWalletUuid)
+	err := validateTransaction(transaction, db)
+	if err != nil {
+		return nil,err
+	}
 	transaction.StartDate = time.Now().Unix()
 	result := db.Create(transaction)
 	if result.Error != nil {

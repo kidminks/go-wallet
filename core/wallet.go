@@ -2,8 +2,10 @@ package core
 
 import (
 	"errors"
+	"fmt"
 	"gorm.io/gorm"
 	"taskpot.com/go_wallet/config"
+	"taskpot.com/go_wallet/database/dto"
 	"taskpot.com/go_wallet/helper"
 	"taskpot.com/go_wallet/model"
 )
@@ -49,4 +51,14 @@ func UpdateWalletIsActive(id string, isActive bool, db *gorm.DB) (*model.Wallet,
 		return nil, result.Error
 	}
 	return wallet, nil
+}
+
+func AreWalletsPresent(ids []string, db *gorm.DB) ([]*dto.GetIdDto, error) {
+	fmt.Printf("Searching wallet with ids %v", ids)
+	var getIds []*dto.GetIdDto
+	db.Find(&getIds, "uuid in ?", ids)
+	if len(getIds) != len(ids) {
+		return nil, errors.New(config.WALLETS_IN_TRANSACTION_NOT_AVAILABLE)
+	}
+	return getIds,nil
 }
