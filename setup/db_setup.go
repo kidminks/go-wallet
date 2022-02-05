@@ -2,8 +2,8 @@ package setup
 
 import (
 	"gorm.io/gorm"
+	"taskpot.com/go_wallet/database"
 	"taskpot.com/go_wallet/helper"
-	"taskpot.com/go_wallet/test/database"
 )
 
 func databaseSetup(db *gorm.DB) {
