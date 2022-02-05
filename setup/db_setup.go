@@ -1,12 +1,13 @@
 package setup
 
 import (
-	"taskpot.com/go_wallet/database"
+	"gorm.io/gorm"
 	"taskpot.com/go_wallet/helper"
+	"taskpot.com/go_wallet/test/database"
 )
 
-func databaseSetup() {
+func databaseSetup(db *gorm.DB) {
 	helper.Logger().Info("Setting wallet database")
-	database.CreateWalletTable()
+	database.CreateWalletTable(db)
 	helper.Logger().Info("Wallet database setup complete")
 }
