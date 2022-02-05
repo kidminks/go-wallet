@@ -3,6 +3,7 @@ package database
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"sync"
 	"taskpot.com/go_wallet/config"
 	"taskpot.com/go_wallet/helper"
 )
@@ -29,4 +30,19 @@ func closeDb(db *gorm.DB) {
 	if err := sqlDb.Close();err != nil {
 		panic(err)
 	}
+}
+
+var databaseLock = &sync.Mutex{}
+var db *gorm.DB
+
+func GetDbConnection() *gorm.DB {
+	if db == nil {
+		databaseLock.Lock()
+		defer databaseLock.Unlock()
+		if db == nil {
+			helper.Logger().Info("Creating new database instance")
+			db = getDbConnection()
+		}
+	}
+	return db
 }

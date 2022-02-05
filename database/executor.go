@@ -1,6 +1,9 @@
 package database
 
-import "taskpot.com/go_wallet/model"
+import (
+	"gorm.io/gorm"
+	"taskpot.com/go_wallet/model"
+)
 
 func treatError(err error) {
 	if err != nil {
@@ -8,9 +11,7 @@ func treatError(err error) {
 	}
 }
 
-func CreateWalletTable() {
-	db := getDbConnection()
-	defer closeDb(db)
+func CreateWalletTable(db *gorm.DB) {
 	treatError(db.AutoMigrate(&model.Wallet{}))
 	treatError(db.AutoMigrate(&model.Transaction{}))
 	treatError(db.AutoMigrate(&model.TransactionStatusHistory{}))

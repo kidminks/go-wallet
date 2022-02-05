@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"taskpot.com/go_wallet/config"
-	"taskpot.com/go_wallet/model/dto"
+	"taskpot.com/go_wallet/test/database/dto"
 )
 
 func ReadParentDatabaseConfig(filePath string, ) {
