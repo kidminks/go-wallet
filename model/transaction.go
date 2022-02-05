@@ -8,7 +8,7 @@ import (
 type Transaction struct {
 	gorm.Model
 	Id int64 `gorm:"primaryKey:autoIncrement" json:"id"`
-	Uuid string `gorm:"type:varchar(36);default:(UUID())" json:"uuid"`
+	Uuid string `gorm:"type:varchar(36);default:(UUID());uniqueIndex" json:"uuid"`
 	PrimaryWalletId int64  `gorm:"index;not null" json:"primary_wallet_id"`
 	SecondaryWalletId int64 `gorm:"index;not null" json:"secondary_wallet_id"`
 	PrimaryWalletUuid string `gorm:"type:varchar(36);index;not null" json:"primary_wallet_uuid"`

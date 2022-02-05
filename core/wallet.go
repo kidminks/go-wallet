@@ -53,6 +53,19 @@ func UpdateWalletIsActive(id string, isActive bool, db *gorm.DB) (*model.Wallet,
 	return wallet, nil
 }
 
+func GetEntityWallet(entityUuid string, entityType string, db *gorm.DB) (*model.Wallet, error) {
+	wallet := &model.Wallet{}
+	result := db.First(wallet, "entity_uuid = ? and entity_type = ?", entityUuid, entityType)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	if result.RowsAffected == 0 {
+		return nil, errors.New(config.DATA_NOT_FOUND)
+	}
+
+	return wallet, nil
+}
+
 func AreWalletsPresent(ids []string, db *gorm.DB) ([]*dto.GetIdDto, error) {
 	fmt.Printf("Searching wallet with ids %v", ids)
 	var getIds []*dto.GetIdDto

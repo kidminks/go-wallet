@@ -1,9 +1,6 @@
-package model
+package util
 
-import (
-	"taskpot.com/go_wallet/model"
-	"testing"
-)
+import "taskpot.com/go_wallet/model"
 
 func GetBasicWallet(uuid string) *model.Wallet {
 	return &model.Wallet{
@@ -25,11 +22,4 @@ func GetWithWalletUuid(uuid string,userUuid string) *model.Wallet {
 	wallet := GetBasicWallet(userUuid)
 	wallet.Uuid = uuid
 	return wallet
-}
-
-func TestWallet(t *testing.T) {
-	wallet := GetBasicWallet("test_wallet_creation")
-	if wallet.EntityType != "USER" {
-		t.Errorf("Error in creating wallet")
-	}
 }

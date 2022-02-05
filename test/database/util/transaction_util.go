@@ -1,8 +1,7 @@
-package model
+package util
 
 import (
 	"taskpot.com/go_wallet/model"
-	"testing"
 	"time"
 )
 
@@ -19,9 +18,3 @@ func GetBasicTransaction() *model.Transaction {
 	}
 }
 
-func TestTransaction(t *testing.T) {
-	transaction := GetBasicTransaction()
-	if transaction.PrimaryWalletUuid != "primary_wallet_id" || transaction.SecondaryWalletUuid != "secondary_wallet_id" {
-		t.Errorf("Error in creating transaction")
-	}
-}

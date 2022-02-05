@@ -6,9 +6,11 @@ import (
 	"sync"
 	"taskpot.com/go_wallet/config"
 	"taskpot.com/go_wallet/helper"
+	"taskpot.com/go_wallet/utils"
 )
 
 func getDbConnection() *gorm.DB {
+	utils.ReadParentDatabaseConfig("../test_db_config.json")
 	dbUser := config.ParentDbConf.DbUser
 	dbPass := config.ParentDbConf.DbPass
 	dbName := config.ParentDbConf.DbName
