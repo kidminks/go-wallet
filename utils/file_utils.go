@@ -7,7 +7,7 @@ import (
 	"taskpot.com/go_wallet/test/database/dto"
 )
 
-func ReadParentDatabaseConfig(filePath string, ) {
+func ReadParentDatabaseConfig(filePath string) {
 	file, _ := os.Open(filePath)
 	defer file.Close()
 	decoder := json.NewDecoder(file)

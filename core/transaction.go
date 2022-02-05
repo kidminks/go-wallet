@@ -24,8 +24,33 @@ func GetTransactionById(id string, db *gorm.DB) (*model.Transaction, error) {
 	return transaction, nil
 }
 
+func validateTransaction(transaction *model.Transaction, db *gorm.DB) error {
+	if transaction.PrimaryWalletUuid == "" || transaction.SecondaryWalletUuid == "" {
+		return errors.New(config.INVALID_DATA)
+	}
+	var ids []string
+	ids = append(ids, transaction.PrimaryWalletUuid)
+	ids = append(ids, transaction.SecondaryWalletUuid)
+	getWallets, err := areWalletsPresent(ids, db)
+	if err != nil {
+		return err
+	}
+	for _, wallet := range getWallets {
+		if wallet.Uuid == transaction.PrimaryWalletUuid {
+			transaction.PrimaryWalletId = wallet.Id
+		} else {
+			transaction.SecondaryWalletId = wallet.Id
+		}
+	}
+	return nil
+}
+
 func CreateTransaction(transaction *model.Transaction, db *gorm.DB) (*model.Transaction, error) {
 	helper.Logger().Info("Creating transaction from " + transaction.PrimaryWalletUuid + " to " + transaction.SecondaryWalletUuid)
+	err := validateTransaction(transaction, db)
+	if err != nil {
+		return nil,err
+	}
 	transaction.StartDate = time.Now().Unix()
 	result := db.Create(transaction)
 	if result.Error != nil {
@@ -68,6 +93,16 @@ func ChangeStatus(id string, status int, db *gorm.DB) (*model.Transaction,error)
 		transaction.CompletionDate = time.Now().Unix()
 	}
 	err := db.Transaction(func(tx *gorm.DB) error {
+		if err := subFromWallet(transaction.SecondaryWalletId, transaction.Amount, tx); err != nil {
+			transaction.PaymentStatus = 2
+			transaction.Comment = transaction.Comment + "|Failed to debit"
+			transactionStatus.Status = 2
+		}
+		if err := addToWallet(transaction.PrimaryWalletId, transaction.Amount, tx); err != nil {
+			transaction.PaymentStatus = 2
+			transaction.Comment = transaction.Comment + "|Failed to credit"
+			transactionStatus.Status = 2
+		}
 		if err := tx.Save(transaction).Error; err != nil {
 			return err
 		}
