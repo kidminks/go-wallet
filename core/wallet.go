@@ -32,3 +32,21 @@ func CreateWallet(wallet *model.Wallet, db *gorm.DB) (*model.Wallet, error){
 	}
 	return wallet, nil
 }
+
+func UpdateWalletIsActive(id string, isActive bool, db *gorm.DB) (*model.Wallet, error) {
+	helper.Logger().Info("Fetching wallet for id" + id)
+	wallet := &model.Wallet{}
+	result := db.First(wallet, "id = ? || uuid = ?", id, id)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	if result.RowsAffected == 0 {
+		return nil, errors.New(config.DATA_NOT_FOUND)
+	}
+	wallet.IsActive = isActive
+	result = db.Model(wallet).Update("is_active", isActive)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return wallet, nil
+}
