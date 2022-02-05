@@ -93,6 +93,16 @@ func ChangeStatus(id string, status int, db *gorm.DB) (*model.Transaction,error)
 		transaction.CompletionDate = time.Now().Unix()
 	}
 	err := db.Transaction(func(tx *gorm.DB) error {
+		if err := SubFromWallet(transaction.SecondaryWalletId, transaction.Amount, tx); err != nil {
+			transaction.PaymentStatus = 2
+			transaction.Comment = transaction.Comment + "|Failed to debit"
+			transactionStatus.Status = 2
+		}
+		if err := AddToWallet(transaction.PrimaryWalletId, transaction.Amount, tx); err != nil {
+			transaction.PaymentStatus = 2
+			transaction.Comment = transaction.Comment + "|Failed to credit"
+			transactionStatus.Status = 2
+		}
 		if err := tx.Save(transaction).Error; err != nil {
 			return err
 		}

@@ -62,3 +62,22 @@ func AreWalletsPresent(ids []string, db *gorm.DB) ([]*dto.GetIdDto, error) {
 	}
 	return getIds,nil
 }
+
+func AddToWallet(id int64, amount float64, db *gorm.DB) error {
+	result := db.Find(&model.Wallet{}, id).Update("current_balance", gorm.Expr("current_balance + ?", 1, amount))
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
+
+func SubFromWallet(id int64, amount float64, db *gorm.DB) error {
+	result := db.Model(&model.Wallet{}).Where("id = ? and current_balance > ", id, amount).Update("current_balance", gorm.Expr("current_balance - ?", 1, amount))
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return errors.New(config.UNABLE_TO_DEBIT_FROM_WALLET)
+	}
+	return nil
+}

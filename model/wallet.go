@@ -7,17 +7,17 @@ import (
 
 type Wallet struct {
 	gorm.Model
-	Id int64 `json:"id"`
+	Id int64 `gorm:"primaryKey:autoIncrement" json:"id"`
 	Uuid string `gorm:"type:varchar(36);default:(UUID())" json:"uuid"`
-	EntityId int64  `json:"entity_id"`
-	EntityUuid string `gorm:"type:varchar(36)" json:"entity_uuid"`
-	EntityType string `gorm:"type:varchar(36)" json:"entity_type"`
-	WalletType string `gorm:"type:varchar(36)" json:"wallet_type"`
-	MinimumBalance float64 `json:"minimum_balance"`
-	MaximumBalance float64 `json:"maximum_balance"`
+	EntityId int64  `gorm:"index;not null" json:"entity_id"`
+	EntityUuid string `gorm:"type:varchar(36);not null" json:"entity_uuid"`
+	EntityType string `gorm:"type:varchar(36);not null" json:"entity_type"`
+	WalletType string `gorm:"type:varchar(36);not null" json:"wallet_type"`
+	MinimumBalance float64 `gorm:"default:0" json:"minimum_balance"`
+	MaximumBalance float64 `gorm:"default:0" json:"maximum_balance"`
 	Status int `json:"status"`
-	IsActive bool `json:"is_active"`
-	CurrentBalance float64 `json:"current_balance"`
+	IsActive bool `gorm:"default:false" json:"is_active"`
+	CurrentBalance float64 `gorm:"default:0" json:"current_balance"`
 	WalletMetadata datatypes.JSON `json:"wallet_metadata"`
 	UserMetadata datatypes.JSON `json:"user_metadata"`
 	CreatedBy string `gorm:"type:varchar(36)" json:"created_by"`
