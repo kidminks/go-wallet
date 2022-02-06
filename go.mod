@@ -1,9 +1,8 @@
-module taskpot.com/go_wallet
+module kidminks/go_wallet
 
 go 1.17
 
 require (
-	github.com/google/uuid v1.3.0
 	go.uber.org/zap v1.20.0
 	gorm.io/datatypes v1.0.5
 	gorm.io/driver/mysql v1.2.3
