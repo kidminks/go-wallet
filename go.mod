@@ -1,4 +1,4 @@
-module kidminks/go_wallet
+module github.com/kidminks/go_wallet
 
 go 1.17
 
