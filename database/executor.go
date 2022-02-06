@@ -2,7 +2,7 @@ package database
 
 import (
 	"gorm.io/gorm"
-	"taskpot.com/go_wallet/model"
+	"github.com/kidminks/go_wallet/model"
 )
 
 func treatError(err error) {

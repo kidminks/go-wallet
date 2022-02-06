@@ -1,8 +1,8 @@
 package setup
 
 import (
-	"taskpot.com/go_wallet/setup"
-	"taskpot.com/go_wallet/test/database"
+	"github.com/kidminks/go_wallet/setup"
+	"github.com/kidminks/go_wallet/test/database"
 	"testing"
 )
 

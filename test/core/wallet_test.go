@@ -2,9 +2,9 @@ package core
 
 import (
 	"errors"
-	"taskpot.com/go_wallet/core"
-	"taskpot.com/go_wallet/test/database"
-	"taskpot.com/go_wallet/test/database/util"
+	"github.com/kidminks/go_wallet/core"
+	"github.com/kidminks/go_wallet/test/database"
+	"github.com/kidminks/go_wallet/test/database/util"
 	"testing"
 )
 

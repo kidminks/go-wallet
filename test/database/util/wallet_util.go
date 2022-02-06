@@ -1,6 +1,6 @@
 package util
 
-import "taskpot.com/go_wallet/model"
+import "github.com/kidminks/go_wallet/model"
 
 func GetBasicWallet(uuid string) *model.Wallet {
 	return &model.Wallet{

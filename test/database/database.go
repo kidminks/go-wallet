@@ -4,9 +4,9 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"sync"
-	"taskpot.com/go_wallet/config"
-	"taskpot.com/go_wallet/helper"
-	"taskpot.com/go_wallet/utils"
+	"github.com/kidminks/go_wallet/config"
+	"github.com/kidminks/go_wallet/helper"
+	"github.com/kidminks/go_wallet/utils"
 )
 
 func getDbConnection() *gorm.DB {

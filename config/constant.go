@@ -1,7 +1,7 @@
 package config
 
 import (
-	"taskpot.com/go_wallet/test/database/dto"
+	"github.com/kidminks/go_wallet/test/database/dto"
 )
 
 const MySql = "mysql"

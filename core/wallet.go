@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"gorm.io/gorm"
-	"taskpot.com/go_wallet/config"
-	"taskpot.com/go_wallet/database/dto"
-	"taskpot.com/go_wallet/helper"
-	"taskpot.com/go_wallet/model"
+	"github.com/kidminks/go_wallet/config"
+	"github.com/kidminks/go_wallet/database/dto"
+	"github.com/kidminks/go_wallet/helper"
+	"github.com/kidminks/go_wallet/model"
 )
 
 func GetWalletById(id string, db *gorm.DB) (*model.Wallet, error) {

@@ -3,11 +3,11 @@ package core
 import (
 	"errors"
 	"fmt"
+	"github.com/kidminks/go_wallet/config"
+	"github.com/kidminks/go_wallet/database/dto"
+	"github.com/kidminks/go_wallet/helper"
+	"github.com/kidminks/go_wallet/model"
 	"gorm.io/gorm"
-	"taskpot.com/go_wallet/config"
-	"taskpot.com/go_wallet/database/dto"
-	"taskpot.com/go_wallet/helper"
-	"taskpot.com/go_wallet/model"
 	"time"
 )
 
@@ -31,7 +31,7 @@ func validateTransaction(transaction *model.Transaction, db *gorm.DB) error {
 	var ids []string
 	ids = append(ids, transaction.PrimaryWalletUuid)
 	ids = append(ids, transaction.SecondaryWalletUuid)
-	getWallets, err := areWalletsPresent(ids, db)
+	getWallets, err := AreWalletsPresent(ids, db)
 	if err != nil {
 		return err
 	}
@@ -93,12 +93,12 @@ func ChangeStatus(id string, status int, db *gorm.DB) (*model.Transaction,error)
 		transaction.CompletionDate = time.Now().Unix()
 	}
 	err := db.Transaction(func(tx *gorm.DB) error {
-		if err := subFromWallet(transaction.SecondaryWalletId, transaction.Amount, tx); err != nil {
+		if err := SubFromWallet(transaction.SecondaryWalletId, transaction.Amount, tx); err != nil {
 			transaction.PaymentStatus = 2
 			transaction.Comment = transaction.Comment + "|Failed to debit"
 			transactionStatus.Status = 2
 		}
-		if err := addToWallet(transaction.PrimaryWalletId, transaction.Amount, tx); err != nil {
+		if err := AddToWallet(transaction.PrimaryWalletId, transaction.Amount, tx); err != nil {
 			transaction.PaymentStatus = 2
 			transaction.Comment = transaction.Comment + "|Failed to credit"
 			transactionStatus.Status = 2

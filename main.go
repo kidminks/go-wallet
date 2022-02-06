@@ -1,11 +1,11 @@
 package main
 
 import (
-	"taskpot.com/go_wallet/config"
-	"taskpot.com/go_wallet/helper"
-	"taskpot.com/go_wallet/setup"
-	"taskpot.com/go_wallet/test/database"
-	"taskpot.com/go_wallet/utils"
+	"github.com/kidminks/go_wallet/config"
+	"github.com/kidminks/go_wallet/helper"
+	"github.com/kidminks/go_wallet/setup"
+	"github.com/kidminks/go_wallet/test/database"
+	"github.com/kidminks/go_wallet/utils"
 )
 
 func main() {

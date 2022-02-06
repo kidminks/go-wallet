@@ -1,7 +1,7 @@
 package util
 
 import (
-	"taskpot.com/go_wallet/model"
+	"github.com/kidminks/go_wallet/model"
 	"time"
 )
 
